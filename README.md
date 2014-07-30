@@ -12,4 +12,47 @@ trees, you can see [someone else's existing project here](https://github.com/vad
 
 If you're interested, please feel free to fork this or drop me a line.
 
+### Installation
+
+1. Clone the repo.
+
+        git clone git@github.com:bengolder/js-btree
+
+2. Install development dependencies.
+
+        cd js-bintree
+        npm install
+
+3. run `gulp`
+
+        gulp # runs tests, creates bundled file
+
+### API
+
+To create a new binary tree, import using `browserify` or node.js `require()`
+
+    var BinaryTree = require('btree.js');
+    var tree = new BinaryTree();
+
+### `.insert( item )`
+
+Adds a new item to the tree.
+
+### `.insertMany( items )`
+
+Adds an array of items to the tree.
+
+### `.min()`
+
+Returns the leftmost item in the tree.
+
+### `.max()`
+
+Returns the rightmost item in the tree.
+
+### `.walk()`
+
+Returns an array containing all the items in the tree, in sorted order from
+left to right.
+
 
