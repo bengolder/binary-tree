@@ -1,6 +1,6 @@
 # js-btree
 
-[![Build Status](https://travis-ci.org/bengolder/js-btree.svg?branch=master)](https://travis-ci.org/bengolder/js-btree)
+[![Build Status](https://travis-ci.org/bengolder/js-btree.svg?branch=master)](https://travis-ci.org/bengolder/js-btree) [![Coverage Status](https://coveralls.io/repos/bengolder/js-btree/badge.png?branch=master)](https://coveralls.io/r/bengolder/js-btree?branch=master)
 
 A Binary Tree object implemented in JavaScript.
 
@@ -55,4 +55,8 @@ Returns the rightmost item in the tree.
 Returns an array containing all the items in the tree, in sorted order from
 left to right.
 
+### `.find( keyValue )`
+
+Searches the tree for the item with a key matching the input `keyValue`
+argument. Returns the item found or `null` if the item is not found.
 
