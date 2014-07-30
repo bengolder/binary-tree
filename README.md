@@ -1,5 +1,7 @@
 # js-btree
 
+[![Build Status](https://travis-ci.org/bengolder/js-btree.svg?branch=master)](https://travis-ci.org/bengolder/js-btree)
+
 A Binary Tree object implemented in JavaScript.
 
 This is currently not a public package. I'm using this as a personal project
