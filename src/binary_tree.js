@@ -51,11 +51,11 @@ BinaryTree.prototype = {
 		return nodes;
 	},
 
-	insert: function( data ){
+	insert: function( item ){
 		var node,
 		    parent = null,
 		    cursor = this.root;
-		node = new BinaryNode( this, data );
+		node = new BinaryNode( this, item );
 
 		while( cursor !== null ){
 			parent = cursor;
