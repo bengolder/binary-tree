@@ -10,7 +10,7 @@ function BinaryTree( data, accessorFunction ){
 		}
 	}
 	if( data ){
-		this.extend( data );
+		this.insertMany( data );
 	}
 };
 
@@ -51,7 +51,7 @@ BinaryTree.prototype = {
 		return nodes;
 	},
 
-	append: function( data ){
+	insert: function( data ){
 		var node,
 		    parent = null,
 		    cursor = this.root;
@@ -75,13 +75,13 @@ BinaryTree.prototype = {
 		}
 	},
 
-	extend: function( items ){
+	insertMany: function( items ){
 		var length = items.length,
 			i      = 0,
 			item;
 		for( i; i < length; i++ ){
 			item = items[i];
-			this.append( item );
+			this.insert( item );
 		}
 	},
 
