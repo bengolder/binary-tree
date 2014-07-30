@@ -1,4 +1,4 @@
-# node-btree
+# js-btree
 
 A Binary Tree object implemented in JavaScript.
 
