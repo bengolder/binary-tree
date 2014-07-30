@@ -2,11 +2,12 @@
 
 A Binary Tree object implemented in JavaScript.
 
-This is currently not a public package. At this point this repo is primarily
-used for the purpose of learning more about algorithms and JavaScript unit
-testing. Eventually I hope to create a Red Black Tree and an Interval Tree.
+This is currently not a public package. I'm using this as a personal project
+to learn more about algorithms and JavaScript unit testing. 
 
-If you're interested, please feel free to fork this, submit pull requests, or
-just drop me a line.
+If you'd like to use a public npm package containing Binary Trees and Red Black
+trees, you can see [someone else's existing project here](https://github.com/vadimg/js_bintrees).
+
+If you're interested, please feel free to fork this or drop me a line.
 
 
