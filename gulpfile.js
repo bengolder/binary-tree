@@ -2,6 +2,8 @@ var gulp        =  require('gulp'),
     istanbul    =  require('gulp-istanbul'),
     jasmine     =  require('gulp-jasmine'),
     uglify      =  require('gulp-uglify'),
+    streamify   =  require('gulp-streamify'),
+    rename      =  require('gulp-rename'),
     browserify  =  require('browserify'),
     source      =  require('vinyl-source-stream');
 
@@ -32,6 +34,9 @@ gulp.task('build', function() {
 	return browserify(entrypoint, {debug:true})
 		.bundle()
 		.pipe(source('btree.js'))
+		.pipe(gulp.dest(distdir))
+		.pipe(streamify(uglify()))
+		.pipe(rename('btree.min.js'))
 		.pipe(gulp.dest(distdir));
 });
 
