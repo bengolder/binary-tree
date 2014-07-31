@@ -3,6 +3,12 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 
 	var BinaryTree = require('../src/binary_tree.js');
 	var BinaryNode = require('../src/binary_node.js');
+	var numbers = [1, -4, 5, 10, -345];
+	var objects = numbers.map(function(n){
+		return { value: n };
+	});
+	var keyFunction = function(d){ return d.value; };
+
 
 	it("can instantiate an empty Binary Tree object", function(){
 		var btree = new BinaryTree();
@@ -24,7 +30,6 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 	});
 
 	it("can create a BinaryTree with a list of numbers", function(){
-		var numbers = [1, -4, 5, 10, -345];
 		var btree = new BinaryTree(numbers);
 		expect(btree.walk()).toEqual(numbers.sort(function(a,b){
 			return (a - b);
@@ -34,47 +39,25 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 	});
 
 	it("can set and use a custom key accessor function", function(){
-		var objects,
-			numbers,
-			keyFunction,
-			btree;
-		numbers = [1, -4, 5, 10, -345];
-		objects = [];
-		numbers.forEach(function(n){
-			objects.push({
-				value: n
-			});
-		});
-		keyFunction = function(d){
-			return d.value;
-		};
-		btree = new BinaryTree(objects, keyFunction);
+		var btree = new BinaryTree(objects, null, keyFunction);
 		expect(btree.walk()).toEqual(objects.sort(function(a, b){
 			return (keyFunction(a) - keyFunction(b));
 		}));
 	});
 
+	it("can set and use a custom comparison function", function(){
+		expect(true).toBe(true);
+	});
+
 	it("can find an item that matches a key", function(){
-		var objects,
-			numbers,
-			keyFunction,
-			btree;
-		numbers = [1, -4, 5, 10, -345];
-		objects = [];
-		numbers.forEach(function(n){
-			objects.push({
-				value: n
-			});
-		});
-		keyFunction = function(d){
-			return d.value;
-		};
-		btree = new BinaryTree(objects, keyFunction);
+		var btree = new BinaryTree(objects, null, keyFunction);
 		var target = -4;
-		var result = btree.find( target );
+		var result = btree.findKey( target );
 		expect(keyFunction(result)).toEqual(target);
 		target = 10;
-		result = btree.find( target );
+		result = btree.findKey( target );
 		expect(keyFunction(result)).toEqual(target);
+		expect(btree.findKey( 20 )).toEqual(null);
+		expect(btree.findKey( 0 )).toEqual(null);
 	});
 });
