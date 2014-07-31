@@ -47,28 +47,66 @@ BinaryTree.prototype = {
 		}
 	},
 
-	min: function( node ){
-		node = node || this.root;
+	_min: function( node ){
 		while( node.left !== null ){
 			node = node.left;
 		}
-		return this._dataOrNull( node );
+		return node;
+	},
+	min: function(){
+		return this._dataOrNull( this._min(this.root) );
 	},
 
-	max: function( node ){
-		node = node || this.root;
+	_max: function( node ){
 		while( node.right !== null ){
 			node = node.right;
 		}
-		return this._dataOrNull( node );
+		return node;
+	},
+	max: function(){
+		return this._dataOrNull( this._max(this.root) );
 	},
 
 	removeKey: function( keyValue ){
 		// remove an item from the tree
+		var node = this._find( keyValue );
+		// this function doesn't care if the value doesn't exist
+		// similar to the behavior of Javascript's `delete` operator
+		if( node ){
+			this._delete( this._find( keyValue ) );
+		}
 	},
 
-	_transplant: function( inNode, outNode ){
+	_delete: function( node ){
+		if( node.left == null ){
+			this._transplant( node, node.right );
+		} else if( node.right == null ){
+			this._transplant( node, node.left );
+		} else {
+			var successor = this._min( node.right );
+			if( successor.parent !== node ){
+				this._transplant( successor, successor.right );
+				successor.right = node.right;
+				successor.right.parent = successor;
+			}
+			this._transplant( node, successor );
+			successor.left = node.left;
+			successor.left.parent = successor;
+		}
+	},
+
+	_transplant: function( outgoing, incoming ){
 		// switch out one node for another.
+		if( outgoing.parent == null ){
+			this.root = incoming;
+		} else if( outgoing == outgoing.parent.left ){
+			outgoing.parent.left = incoming;
+		} else {
+			outgoing.parent.right = incoming;
+		}
+		if( incoming !== null ){
+			incoming.parent = outgoing.parent;
+		}
 	},
 
 	_walk: function( node ){
@@ -123,16 +161,19 @@ BinaryTree.prototype = {
 		return this;
 	},
 
-	findKey: function( keyValue ){
+	_find: function( key ){
 		var node = this.root;
-		while( node !== null && keyValue !== this._get(node) ){
-			if( keyValue < this._get(node) ){
+		while( node !== null && key !== this._get(node) ){
+			if( key < this._get(node) ){
 				node = node.left;
 			} else {
 				node = node.right;
 			}
 		}
-		return this._dataOrNull( node );
+		return node;
+	},
+	findKey: function( keyValue ){
+		return this._dataOrNull( this._find( keyValue ) );
 	}
 };
 
