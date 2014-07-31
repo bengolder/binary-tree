@@ -11,8 +11,6 @@ var entrypoint = './src/binary_tree.js';
 var srcfiles = [ './src/**/*.js' ];
 var testfiles = [ './test/**/*.js' ];
 
-var distdir = './dist/';
-
 // Run tests and generate coverage data
 gulp.task('test', function(cb) {
 	gulp.src(srcfiles)
@@ -33,11 +31,11 @@ gulp.task('test', function(cb) {
 gulp.task('build', function() {
 	return browserify(entrypoint, {debug:true})
 		.bundle()
-		.pipe(source('btree.js'))
-		.pipe(gulp.dest(distdir))
+		.pipe(source('binary-tree.js'))
+		.pipe(gulp.dest('./'))
 		.pipe(streamify(uglify()))
-		.pipe(rename('btree.min.js'))
-		.pipe(gulp.dest(distdir));
+		.pipe(rename('binary-tree.min.js'))
+		.pipe(gulp.dest('./'));
 });
 
 // watch files for changes
