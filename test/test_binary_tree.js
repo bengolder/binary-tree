@@ -62,7 +62,7 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 		result = btree.findKey( target );
 		expect(keyFunction(result)).toEqual(target);
 		expect(btree.findKey( 20 )).toBeNull();
-		expect(btree.findKey( 0 )).toEqual(null);
+		expect(btree.findKey( 0 )).toBeNull();
 	});
 
 	it("can delete an item with a given key", function(){

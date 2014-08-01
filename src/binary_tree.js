@@ -1,19 +1,23 @@
 var BinaryNode = require('./binary_node.js');
 
 var compareBasic = function( a, b ){
-	return a > b;
+	// this is a basic comparison function that mimics numeric comparison (a - b)
+	// if a is bigger than b, it returns true (1)
+	// if a is equal to b, it also returns true (1)
+	// if a is less than b, it returns false (0)
+	return a >= b;
 }
 
-function BinaryTree( data, comparatorFunction, accessorFunction ){
+function BinaryTree( data, comparatorFunction, key ){
 	this.root = null;
 
 	// the accessor function receives the data and returns the value to be used
 	// as a sorting key.
-	if( accessorFunction == undefined ){
+	if( key == undefined ){
 		this._get = function(n){ return n.data; };
 	} else {
 		this._get = function(n){
-			return accessorFunction(n.data);
+			return key(n.data);
 		}
 	}
 
@@ -24,7 +28,7 @@ function BinaryTree( data, comparatorFunction, accessorFunction ){
 		var result = comparatorFunction( this._get(n), this._get(m) );
 		// comparatorFunctions can return either numbers or truthy / falsey
 		// they are fed in their data (default) or whatever is returned 
-		// by the accessorFunction
+		// by the key
 		if( !result || result < 0 ){
 			return true; // go left
 		} else {

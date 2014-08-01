@@ -38,6 +38,68 @@ To create a new binary tree, import using `browserify` or node.js `require()`
     var BinaryTree = require('btree.js');
     var tree = new BinaryTree();
 
+A new BinaryTree can take several optional arguments:
+
+    var tree = BinaryTree( data, comparatorFunction, key );
+
+#### `data`
+
+`data` is assumed to be an array-like collection of items to add to the tree.
+`data` must support the `.forEach()` method.
+
+    if( data ){
+        this.insertMany( data );
+    }
+
+#### `comparatorFunction`
+
+The `comparatorFunction` is a function used to compare the data held in two nodes of the
+tree. This function determines where to insert new items in the tree. In a
+binary tree, one value must be placed to the left or right of another. In a
+simple case, where the `comparatorFunction` is
+
+    function( a, b ){
+        return a - b;
+    }
+
+and `a` and `b` are numbers, there are only two possible outcomes to the
+comparison: `a` is to the left of `b` (if `a` is less than `b`) or `a` 
+is to the right of `b` (if `a` is greater than or equal to `b`).
+
+With no input, the default `comparatorFunction` is
+
+    function( a, b ){
+        return a >= b;
+    }
+
+which works to compare either numbers or strings.
+
+For `a` to go on the left `b`, your `comparatorFunction` should return one of two possible
+values:
+
+* a number less than 0
+* a "falsey" value.
+
+For `a` to go on the right of `b`, it should return:
+
+* a number equal to or greater than 0
+* a "truthy" value
+
+#### `key`
+
+The `key` is used to extract the value passed to the
+`comparatorFunction`. For example, if we were sorting objects based on a
+`title` attribute contained in each, we would create a `comparatorFunction`
+like this:
+
+    function( n ){
+        return n.name;
+    }
+
+If no `key` is given, the default is to assume that the items
+added to the tree can be passed directly to the `comparatorFunction` for
+sorting.
+
 #### `.insert( item )`
 
 Adds a new item to the tree.
