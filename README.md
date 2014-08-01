@@ -58,13 +58,13 @@ tree. This function determines where to insert new items in the tree. In a
 binary tree, one value must be placed to the left or right of another. In a
 simple case, where the `comparatorFunction` is
 
-    function( a, b ){
+    function compare( a, b ){
         return a - b;
     }
 
 and `a` and `b` are numbers, there are only two possible outcomes to the
-comparison: `a` is to the left of `b` (if `a` is less than `b`) or `a` 
-is to the right of `b` (if `a` is greater than or equal to `b`).
+comparison: `a` goes to the left of `b` (if `a` is less than `b`) or `a` 
+goes to the right of `b` (if `a` is greater than or equal to `b`).
 
 With no input, the default `comparatorFunction` is
 
@@ -92,7 +92,7 @@ The `key` is used to extract the value passed to the
 `title` attribute contained in each, we would create a `comparatorFunction`
 like this:
 
-    function( n ){
+    function key( n ){
         return n.name;
     }
 
