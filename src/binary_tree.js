@@ -6,19 +6,21 @@ var compareBasic = function( a, b ){
 	// if a is equal to b, it also returns true (1)
 	// if a is less than b, it returns false (0)
 	return a >= b;
-}
+};
 
 function BinaryTree( data, comparatorFunction, key ){
 	this.root = null;
+	this.size = 0;
+
 
 	// the accessor function receives the data and returns the value to be used
 	// as a sorting key.
-	if( key == undefined ){
+	if( key === undefined ){
 		this._get = function(n){ return n.data; };
 	} else {
 		this._get = function(n){
 			return key(n.data);
-		}
+		};
 	}
 
 	comparatorFunction = comparatorFunction || compareBasic;
@@ -39,7 +41,7 @@ function BinaryTree( data, comparatorFunction, key ){
 	if( data ){
 		this.insertMany( data );
 	}
-};
+}
 
 BinaryTree.prototype = {
 
@@ -82,9 +84,9 @@ BinaryTree.prototype = {
 	},
 
 	_delete: function( node ){
-		if( node.left == null ){
+		if( node.left === null ){
 			this._transplant( node, node.right );
-		} else if( node.right == null ){
+		} else if( node.right === null ){
 			this._transplant( node, node.left );
 		} else {
 			var successor = this._min( node.right );
@@ -97,11 +99,12 @@ BinaryTree.prototype = {
 			successor.left = node.left;
 			successor.left.parent = successor;
 		}
+		this.size--;
 	},
 
 	_transplant: function( outgoing, incoming ){
 		// switch out one node for another.
-		if( outgoing.parent == null ){
+		if( outgoing.parent === null ){
 			this.root = incoming;
 		} else if( outgoing == outgoing.parent.left ){
 			outgoing.parent.left = incoming;
@@ -147,13 +150,14 @@ BinaryTree.prototype = {
 			}
 		}
 		node.parent = parent;
-		if( parent == null ){
+		if( parent === null ){
 			this.root = node;
 		} else if( this._compare(node, parent) ){
 			parent.left = node;
 		} else {
 			parent.right = node;
 		}
+		this.size++;
 		return this;
 	},
 
@@ -178,7 +182,28 @@ BinaryTree.prototype = {
 	},
 	findKey: function( keyValue ){
 		return this._dataOrNull( this._find( keyValue ) );
+	},
+
+	_step: function( node, direction ){
+		if( node[direction] !== null ){
+			return this._min( node[direction] );
+		} 
+		var next = node.parent;
+		while( next !== null && node == next[direction] ){
+			node = next;
+			next = next.parent;
+		}
+		return next;
+	},
+
+	next: function( node ){
+		return this._step( node, 'right' );
+	},
+
+	prev: function( node ){
+		return this._step( node, 'left' );
 	}
+
 };
 
 module.exports = BinaryTree;

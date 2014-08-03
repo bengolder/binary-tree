@@ -1,18 +1,20 @@
-var gulp        =  require('gulp'),
-    istanbul    =  require('gulp-istanbul'),
-    jasmine     =  require('gulp-jasmine'),
-    uglify      =  require('gulp-uglify'),
-    streamify   =  require('gulp-streamify'),
-    rename      =  require('gulp-rename'),
-    browserify  =  require('browserify'),
-    source      =  require('vinyl-source-stream');
+var gulp        = require('gulp'),
+    jshint      = require('gulp-jshint'),
+    stylish     = require('jshint-stylish'),
+    istanbul    = require('gulp-istanbul'),
+    jasmine     = require('gulp-jasmine'),
+    uglify      = require('gulp-uglify'),
+    streamify   = require('gulp-streamify'),
+    rename      = require('gulp-rename'),
+    browserify  = require('browserify'),
+    source      = require('vinyl-source-stream');
 
 var entrypoint = './src/binary_tree.js';
 var srcfiles = [ './src/**/*.js' ];
 var testfiles = [ './test/**/*.js' ];
 
 // Run tests and generate coverage data
-gulp.task('test', function(cb) {
+gulp.task('test', ['lint'], function(cb) {
 	gulp.src(srcfiles)
 		.pipe(istanbul())
 		.on('finish', function(){
@@ -26,6 +28,11 @@ gulp.task('test', function(cb) {
 		});
 });
 
+gulp.task('lint', function() {
+  return gulp.src(srcfiles)
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
+});
 
 // create a single js file
 gulp.task('build', function() {

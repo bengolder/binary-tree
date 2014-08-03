@@ -27,6 +27,7 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 		expect(node.tree).toBe(btree);
 		expect(node.data).toBe(6);
 		expect(node.toString()).toEqual("BinaryTreeNode(key: 6, data: 6)")
+		expect(btree.size).toBe(0);
 	});
 
 	it("can create a BinaryTree with a list of numbers", function(){
@@ -36,6 +37,7 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 		}));
 		expect(btree.min()).toEqual(-345);
 		expect(btree.max()).toEqual(10);
+		expect(btree.size).toEqual(numbers.length);
 	});
 
 	it("can set and use a custom key accessor function", function(){
