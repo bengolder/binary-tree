@@ -1,6 +1,6 @@
 # binary-tree
 
-[![Build Status](https://travis-ci.org/bengolder/binary-tree.svg?branch=master)](https://travis-ci.org/bengolder/binary-tree) [![Coverage Status](https://coveralls.io/repos/bengolder/binary-tree/badge.png?branch=master)](https://coveralls.io/r/bengolder/binary-tree?branch=master)
+[![Build Status](https://travis-ci.org/bengolder/binary-tree.svg?branch=master)](https://travis-ci.org/bengolder/binary-tree) [![Coverage Status](https://img.shields.io/coveralls/bengolder/binary-tree.svg)](https://coveralls.io/r/bengolder/binary-tree?branch=master)
 
 A Binary Tree object implemented in JavaScript.
 
