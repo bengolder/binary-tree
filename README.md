@@ -1,4 +1,4 @@
-# js-btree
+# binary-tree
 
 [![Build Status](https://travis-ci.org/bengolder/js-btree.svg?branch=master)](https://travis-ci.org/bengolder/js-btree) [![Coverage Status](https://coveralls.io/repos/bengolder/js-btree/badge.png?branch=master)](https://coveralls.io/r/bengolder/js-btree?branch=master)
 
