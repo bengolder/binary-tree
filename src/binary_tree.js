@@ -11,6 +11,7 @@ var compareBasic = function( a, b ){
 function BinaryTree( data, comparatorFunction, key ){
 	this.root = null;
 	this.size = 0;
+  this.cursor = null;
 
 
 	// the accessor function receives the data and returns the value to be used
@@ -54,8 +55,10 @@ BinaryTree.prototype = {
 	},
 
 	_min: function( node ){
+    this.cursor = node;
 		while( node.left !== null ){
 			node = node.left;
+      this.cursor = node;
 		}
 		return node;
 	},
@@ -64,8 +67,10 @@ BinaryTree.prototype = {
 	},
 
 	_max: function( node ){
+    this.cursor = node;
 		while( node.right !== null ){
 			node = node.right;
+      this.cursor = node;
 		}
 		return node;
 	},
@@ -117,6 +122,7 @@ BinaryTree.prototype = {
 	},
 
 	_walk: function( node ){
+    this.cursor = node;
 		if( node ){
 			this._walk( node.left );
 			this._nodelist.push( node.data );
@@ -137,19 +143,20 @@ BinaryTree.prototype = {
 
 	insert: function( item ){
 		var node,
-		    parent = null,
-		    cursor = this.root;
+		    parent = null;
+    this.cursor = this.root;
 		node = new BinaryNode( this, item );
 
-		while( cursor !== null ){
-			parent = cursor;
+		while( this.cursor !== null ){
+			parent = this.cursor;
 			if( this._compare(node, parent) ){
-				cursor = cursor.left;
+				this.cursor = this.cursor.left;
 			} else {
-				cursor = cursor.right;
+				this.cursor = this.cursor.right;
 			}
 		}
 		node.parent = parent;
+    this.cursor = node;
 		if( parent === null ){
 			this.root = node;
 		} else if( this._compare(node, parent) ){
@@ -171,11 +178,14 @@ BinaryTree.prototype = {
 
 	_find: function( key ){
 		var node = this.root;
+    this.cursor = node;
 		while( node !== null && key !== this._get(node) ){
 			if( key < this._get(node) ){
 				node = node.left;
+        this.cursor = node;
 			} else {
 				node = node.right;
+        this.cursor = node;
 			}
 		}
 		return node;
@@ -185,6 +195,7 @@ BinaryTree.prototype = {
 	},
 
 	_step: function( node, direction ){
+    this.cursor = node;
 		if( node[direction] !== null ){
 			return this._min( node[direction] );
 		} 
@@ -193,15 +204,16 @@ BinaryTree.prototype = {
 			node = next;
 			next = next.parent;
 		}
+    this.cursor = next;
 		return next;
 	},
 
-	next: function( node ){
-		return this._step( node, 'right' );
+	next: function(){
+		return this._dataOrNull(this._step( this.cursor, 'right' ));
 	},
 
 	prev: function( node ){
-		return this._step( node, 'left' );
+		return this._dataOrNull(this._step( this.cursor, 'left' ));
 	}
 
 };

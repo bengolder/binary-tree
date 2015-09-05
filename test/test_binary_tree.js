@@ -4,6 +4,12 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 	var BinaryTree = require('../src/binary_tree.js');
 	var BinaryNode = require('../src/binary_node.js');
 	var numbers = [1, -4, 5, 10, -345];
+  var manyNumbers = [];
+  for( var i = 0; i < 500; i++){
+    manyNumbers.push(Math.random());
+  }
+  var sortedNumbers = numbers.sort(function(a,b){ return (a - b); });
+  var manySortedNumbers = manyNumbers.sort(function(a,b){ return (a - b); });
 	var names = ["Maude", "Lillian", "Gertrude", "Rose", "Edna", "Pearl"];
 	var objects = numbers.map(function(n){ return { value: n }; });
 	var people = names.map(function(n){ return { value: n }; });
@@ -32,12 +38,18 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 
 	it("can create a BinaryTree with a list of numbers", function(){
 		var btree = new BinaryTree(numbers);
-		expect(btree.walk()).toEqual(numbers.sort(function(a,b){
-			return (a - b);
-		}));
+		expect(btree.walk()).toEqual(sortedNumbers);
 		expect(btree.min()).toEqual(-345);
 		expect(btree.max()).toEqual(10);
 		expect(btree.size).toEqual(numbers.length);
+	});
+
+	it("can create a BinaryTree with 500 numbers", function(){
+		var btree = new BinaryTree(manyNumbers);
+		expect(btree.walk()).toEqual(manySortedNumbers);
+		expect(btree.min()).toEqual(manySortedNumbers[0]);
+		expect(btree.max()).toEqual(manySortedNumbers[manySortedNumbers.length - 1]);
+		expect(btree.size).toEqual(manyNumbers.length);
 	});
 
 	it("can set and use a custom key accessor function", function(){
@@ -92,4 +104,56 @@ describe("Binary Tree Basic Functionality Test Suite", function(){
 		}
 		expect(btree.walk()).toEqual([]);
 	});
+
+  it("stores cursor state", function(){
+		var btree = new BinaryTree(numbers);
+    expect(numbers.indexOf(btree.cursor.data) > -1);
+  });
+
+  it("stores cursor at the last found key", function(){
+		var btree = new BinaryTree(numbers);
+    btree.findKey(-4);
+    expect(btree.cursor.data === -4);
+  });
+
+  it("can return items in order using next()", function(){
+		var btree = new BinaryTree(numbers);
+    btree.findKey(sortedNumbers[0]);
+    for (var i = 1; i < sortedNumbers.length; i++){
+      expect(btree.next() === sortedNumbers[i]);
+    }
+  });
+
+  it("can return items in order using prev()", function(){
+		var btree = new BinaryTree(numbers);
+    var last = sortedNumbers.length - 1;
+    btree.findKey(sortedNumbers[last]);
+    for (var i = last - 1; i >= 0; i--){
+      expect(btree.prev() === sortedNumbers[i]);
+    }
+  });
+
+  it("can step back and forth using next() and prev()", function(){
+		var btree = new BinaryTree(numbers);
+    btree.findKey(sortedNumbers[2]);
+    expect(btree.next() === sortedNumbers[3]);
+    expect(btree.prev() === sortedNumbers[2]);
+    expect(btree.prev() === sortedNumbers[1]);
+    expect(btree.prev() === sortedNumbers[0]);
+    expect(btree.next() === sortedNumbers[1]);
+    expect(btree.next() === sortedNumbers[2]);
+    expect(btree.next() === sortedNumbers[3]);
+    expect(btree.next() === sortedNumbers[4]);
+    expect(btree.prev() === sortedNumbers[3]);
+  });
+
+  it("trying to call next() on max or prev() on min returns null", function(){
+		var btree = new BinaryTree(numbers);
+    var last = sortedNumbers.length - 1;
+    btree.findKey(sortedNumbers[last]);
+    expect(btree.next() === null);
+    btree.findKey(sortedNumbers[0]);
+    expect(btree.prev() === null);
+  });
+
 });
